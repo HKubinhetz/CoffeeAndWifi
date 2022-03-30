@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField, ValidationError
 from wtforms.validators import DataRequired
 import csv
 
@@ -12,24 +12,52 @@ app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap(app)
 
 
+def time_validator(form, field):
+    if 'AM' not in field.data and 'PM' not in field.data:
+        raise ValidationError('Field must be in an hour format ending in AM or PM, i.e. "10AM".')
+
+
+def link_validator(form, field):
+    if 'http' not in field.data or 'maps' not in field.data:
+        raise ValidationError('Field must be a google maps link.')
+
+
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
-    location = StringField('Location URL', validators=[DataRequired()])         # todo - create a link validator
-    open_time = StringField('Opening Time', validators=[DataRequired()])        # todo - create a time validator
-    closing_time = StringField('Closing Time', validators=[DataRequired()])     # todo - create a time validator
-    # coffee = None                                                             # todo - create a dropdown for coffee
-    # wifi = None                                                               # todo - create a dropdown for wifi
-    # outlets = None                                                            # todo - create a dropdown for outlets
+
+    location = StringField('Location URL',
+                           validators=[DataRequired(), link_validator])
+
+    open_time = StringField('Opening Time',
+                            validators=[DataRequired(), time_validator])
+
+    closing_time = StringField('Closing Time',
+                               validators=[DataRequired(),  time_validator])
+
+    coffee = SelectField('Coffee Rating',
+                         choices=[('1', '☕'),
+                                  ('2', '☕☕'),
+                                  ('3', '☕☕☕'),
+                                  ('4', '☕☕☕☕'),
+                                  ('5', '☕☕☕☕☕')])
+
+    wifi = SelectField('WiFi Rating',
+                       choices=[('0', '✘'),
+                                ('1', '📡'),
+                                ('2', '📡📡'),
+                                ('3', '📡📡📡'),
+                                ('4', '📡📡📡📡'),
+                                ('5', '📡📡📡📡📡')])
+
+    outlets = SelectField('Outlet Rating',
+                          choices=[('0', '✘'),
+                                   ('1', '🔌'),
+                                   ('2', '🔌🔌'),
+                                   ('3', '🔌🔌🔌'),
+                                   ('4', '🔌🔌🔌🔌'),
+                                   ('5', '🔌🔌🔌🔌🔌')])
+
     submit = SubmitField('Submit')
-
-# Exercise:
-# add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
-# make coffee/wifi/power a select element with choice of 0 to 5.
-#e.g. You could use emojis ☕️/💪/✘/🔌
-# make all fields required except submit
-# use a validator to check that the URL field has a URL entered.
-# ---------------------------------------------------------------------------
-
 
 # all Flask routes below
 @app.route("/")
@@ -37,7 +65,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/add')
+@app.route('/add', methods=["POST", "GET"])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():

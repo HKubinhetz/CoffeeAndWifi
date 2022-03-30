@@ -2,7 +2,7 @@
 your web pages for the styles to be rendered. */
 
 body {
-background-color: #333;
+background-color: #181E44;
 color: white;
 }
 
@@ -16,10 +16,15 @@ a {
   margin: 0;
   height: 100vh;
   color: white;
-  background-color: #333;
+  background-color: #181E44;
 }
 
 .space-above {
     margin-top: 20px;
     padding-top: 20px;
 }
+
+.has-error .control-label, .has-error .help-block {
+    color: #ffc107;
+}
+

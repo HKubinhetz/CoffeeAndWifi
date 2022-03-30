@@ -6,12 +6,20 @@ from wtforms.validators import DataRequired
 import csv
 
 app = Flask(__name__)
+
+# Random key (remember to hide this one if you're hosting your project somewhere!):
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap(app)
 
 
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
+    location = StringField('Location URL', validators=[DataRequired()])         # todo - create a link validator
+    open_time = StringField('Opening Time', validators=[DataRequired()])        # todo - create a time validator
+    closing_time = StringField('Closing Time', validators=[DataRequired()])     # todo - create a time validator
+    # coffee = None                                                             # todo - create a dropdown for coffee
+    # wifi = None                                                               # todo - create a dropdown for wifi
+    # outlets = None                                                            # todo - create a dropdown for outlets
     submit = SubmitField('Submit')
 
 # Exercise:
@@ -42,7 +50,7 @@ def add_cafe():
 
 @app.route('/cafes')
 def cafes():
-    with open('cafe-data.csv', newline='') as csv_file:
+    with open('cafe-data.csv', newline='', encoding='utf8') as csv_file:
         csv_data = csv.reader(csv_file, delimiter=',')
         list_of_rows = []
         for row in csv_data:

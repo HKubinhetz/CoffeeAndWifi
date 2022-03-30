@@ -35,27 +35,27 @@ class CafeForm(FlaskForm):
                                validators=[DataRequired(),  time_validator])
 
     coffee = SelectField('Coffee Rating',
-                         choices=[('1', '☕'),
-                                  ('2', '☕☕'),
-                                  ('3', '☕☕☕'),
-                                  ('4', '☕☕☕☕'),
-                                  ('5', '☕☕☕☕☕')])
+                         choices=[('☕', '☕'),
+                                  ('☕☕', '☕☕'),
+                                  ('☕☕☕', '☕☕☕'),
+                                  ('☕☕☕☕', '☕☕☕☕'),
+                                  ('☕☕☕☕☕', '☕☕☕☕☕')])
 
     wifi = SelectField('WiFi Rating',
-                       choices=[('0', '✘'),
-                                ('1', '📡'),
-                                ('2', '📡📡'),
-                                ('3', '📡📡📡'),
-                                ('4', '📡📡📡📡'),
-                                ('5', '📡📡📡📡📡')])
+                       choices=[('✘', '✘'),
+                                ('📡', '📡'),
+                                ('📡📡', '📡📡'),
+                                ('📡📡📡', '📡📡📡'),
+                                ('📡📡📡📡', '📡📡📡📡'),
+                                ('📡📡📡📡📡', '📡📡📡📡📡')])
 
     outlets = SelectField('Outlet Rating',
-                          choices=[('0', '✘'),
-                                   ('1', '🔌'),
-                                   ('2', '🔌🔌'),
-                                   ('3', '🔌🔌🔌'),
-                                   ('4', '🔌🔌🔌🔌'),
-                                   ('5', '🔌🔌🔌🔌🔌')])
+                          choices=[('✘', '✘'),
+                                   ('🔌', '🔌'),
+                                   ('🔌🔌', '🔌🔌'),
+                                   ('🔌🔌🔌', '🔌🔌🔌'),
+                                   ('🔌🔌🔌🔌', '🔌🔌🔌🔌'),
+                                   ('🔌🔌🔌🔌🔌', '🔌🔌🔌🔌🔌')])
 
     submit = SubmitField('Submit')
 
@@ -69,11 +69,31 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
+        cafe_info = []
+        concatenated_string = ""
+
+        cafe_info.append(form.cafe.data)
+        cafe_info.append(form.location.data)
+        cafe_info.append(form.open_time.data)
+        cafe_info.append(form.closing_time.data)
+        cafe_info.append(form.coffee.data)
+        cafe_info.append(form.wifi.data)
+        cafe_info.append(form.outlets.data)
+        for info in cafe_info:
+            concatenated_string += info + ","
+        print(concatenated_string[:-1])
+
+        with open('cafe-data.csv', 'a', newline='', encoding='utf8') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(cafe_info)
+            print("Writing complete!")
+            return render_template('success.html')
     return render_template('add.html', form=form)
+
+
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
 
 @app.route('/cafes')

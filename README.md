@@ -1,9 +1,9 @@
 # CoffeeAndWifi
-A Project that rates Coffees and their Wifi Connections. Made with Python, Flask, HTML, CSS and Love ❤.
+A Project that rates Coffees and their Wifi Connections. Made with **Python**, **Flask**, **HTM**L, **CSS** and **Love** ❤.
 
 ![image](https://user-images.githubusercontent.com/31540553/160968578-75b7cf76-a7dd-4e70-93ff-37a6ae1a925d.png)
 
-The entire application is based on a Flask server where HTML pages are rendered to show a little database (extracted from a CSV file) of different Cafes and their rating on WiFi connection, outlet availability, and most importantly, coffee quality. 
+The entire application is based on a **Flask** Server where **HTML** pages are rendered to show a little database (extracted from a CSV file) of different Cafes and their rating on WiFi connection, outlet availability, and most importantly, coffee quality. 
 
 ![image](https://user-images.githubusercontent.com/31540553/161199708-2e3dc230-402f-4431-89b6-aa7ff3cacea8.png)
 

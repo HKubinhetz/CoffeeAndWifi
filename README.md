@@ -7,12 +7,12 @@ The entire application is based on a Flask server where HTML pages are rendered 
 
 ![image](https://user-images.githubusercontent.com/31540553/161199708-2e3dc230-402f-4431-89b6-aa7ff3cacea8.png)
 
-There is also a link to add a new Cafe to the list:
+There is also a link to add a new Cafe to the list. A great functionality created for this part of the project is a robust validation structure. Users have to fill every field and input the correct information. 
 
-![image](https://user-images.githubusercontent.com/31540553/161199792-e95807bd-8454-4dce-ab19-55472c70f794.png)
+There are also validators for the link and operating hours. It is possible to create any type of validation, simple or complex, through a python function embedded on the Flask Form.
 
-A great functionality created for this part of the project is a robust validation structure. Users have to fill every field and input the correct information. There are also validators for the link and operating hours:
+I also changed the appearance of the error messages from red to gold to better fit the background color:
 
-![image](https://user-images.githubusercontent.com/31540553/161200055-7e923f6f-cb9e-4c66-ae96-4359a5c67cbe.png)
+![Animação](https://user-images.githubusercontent.com/31540553/161293123-d602f2c4-068d-48a0-a2aa-2399a53900c7.gif)
 
 This project is a great exercise on several web-related and python-related technologies. 
